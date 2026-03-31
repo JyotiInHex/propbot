@@ -2,7 +2,7 @@
 // PROPBOT — Main Application Logic
 // ============================================================
 
-let GEMINI_KEY = "AIzaSyB8zkFMTyeC__SDlNKkmugn8YpvJNc9ntQ";
+let GEMINI_KEY = "AIzaSyDvHoiQcu7G5nXyPlGzSdvh1skxObPvv2M";
 let ELEVEN_KEY = "";
 let GEMINI_MODEL = "gemini-2.5-flash";
 
