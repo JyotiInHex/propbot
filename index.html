@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PropBot — Real Estate AI · Guwahati</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     SETTINGS MODAL
+     ============================================================ -->
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal">
+    <h2>⚙️ API Configuration</h2>
+    <p>Get Gemini free at <strong style="color:var(--white)">aistudio.google.com</strong> · ElevenLabs premium voice at <strong style="color:var(--light)">elevenlabs.io</strong></p>
+
+    <label>Gemini API Key (required)</label>
+    <input type="password" id="geminiKey" placeholder="AIzaSy..." />
+
+    <label>ElevenLabs API Key (optional — premium voice)</label>
+    <input type="password" id="xiKey" placeholder="sk_..." />
+    <div class="xi-note">💡 Leave blank to use free browser TTS. ElevenLabs gives richer voice quality.</div>
+
+    <label>Gemini Model</label>
+    <select id="modelSel">
+      <option value="gemini-2.5-flash">Gemini 2.5 Flash — Free, fast ✓</option>
+      <option value="gemini-2.5-flash-lite-preview-06-17">Gemini 2.5 Flash-Lite — Fastest, free ✓</option>
+      <option value="gemini-2.5-pro-preview-06-05">Gemini 2.5 Pro — Smartest (paid)</option>
+    </select>
+
+    <div class="modal-btns">
+      <button class="btn-primary"   onclick="saveSettings()">Save &amp; Connect</button>
+      <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP SHELL
+     ============================================================ -->
+<div id="app">
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="#">
+      <div class="logo-icon">🏡</div>
+      <div>
+        <div class="logo-name">PropBot</div>
+        <div class="logo-tag">Real Estate AI · Guwahati</div>
+      </div>
+    </a>
+    <div class="header-controls">
+      <div class="status-pill" id="statusPill">
+        <div class="status-dot"></div>
+        <span id="statusText">Not connected</span>
+      </div>
+      <button class="btn-gear" onclick="openSettings()" title="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-hdr">
+      <h3>Properties</h3>
+      <p>2 projects · 11 listings · Guwahati</p>
+    </div>
+    <div class="prop-scroll" id="propList"></div>
+  </aside>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area">
+    <div class="messages" id="messages">
+
+      <!-- Welcome Screen -->
+      <div class="welcome" id="welcomeScreen">
+        <span class="welcome-icon">🏘️</span>
+        <h2>Welcome to PropBot</h2>
+        <p>Your intelligent real estate AI for <strong style="color:var(--white)">Panjabari</strong> &amp; <strong style="color:var(--light)">Beltola</strong>, Guwahati.</p>
+        <div class="welcome-steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Click <strong>⚙️</strong> to enter your <strong>Gemini API key</strong> (free from aistudio.google.com)</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Optionally add <strong>ElevenLabs key</strong> for premium voice output</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Type or use <strong>🎙️ mic button</strong> to ask about properties, prices, investments</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /messages -->
+
+    <!-- INPUT BAR -->
+    <div class="input-bar">
+      <div class="quick-row">
+        <button class="qbtn" onclick="quickAsk('Show 3BHK flats under ₹70 lakhs')">3BHK under ₹70L</button>
+        <button class="qbtn" onclick="quickAsk('Which property has best investment potential and rental yield?')">Best investment</button>
+        <button class="qbtn" onclick="quickAsk('Compare Ramest Tower vs Discovery Villa in detail')">Compare both</button>
+        <button class="qbtn" onclick="quickAsk('Which flats are ready to move in right now?')">Ready to move</button>
+        <button class="qbtn" onclick="quickAsk('Tell me about bank loan options and EMI for these properties')">Bank loans &amp; EMI</button>
+      </div>
+      <div class="input-row">
+        <button class="btn-mic" id="micBtn" onclick="toggleMic()">
+          <div class="mic-ripple"></div>
+          🎙️
+        </button>
+        <div class="textarea-wrap">
+          <textarea
+            class="chat-input"
+            id="chatInput"
+            rows="1"
+            placeholder="Ask about properties, prices, investment…"
+            onkeydown="handleEnter(event)"
+            oninput="autoGrow(this)"
+          ></textarea>
+        </div>
+        <button class="btn-send" id="sendBtn" onclick="sendMsg()">➤</button>
+      </div>
+      <div class="voice-hint" id="voiceHint">
+        🎙️ Click mic or press Enter to send &nbsp;·&nbsp; 🔊 Tap Speak on any reply
+      </div>
+    </div>
+
+  </div><!-- /chat-area -->
+</div><!-- /app -->
+
+<!-- JS: load order matters — data first, then tts, then app -->
+<script src="js/data.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
